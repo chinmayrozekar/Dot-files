@@ -372,10 +372,13 @@ if command -v fzf &> /dev/null; then
 fi
 
 # Set up zoxide (smart cd command) if available
-if command -v zoxide &> /dev/null; then
+if command -v zoxide &>/dev/null; then
     eval "$(zoxide init bash)"
-    alias cd='z'
+    alias cd='z'               # jump-to-dir magic 🪄
+else
+    unalias cd 2>/dev/null || true   # ensure we’re back to plain `cd`
 fi
+
 
 # Set up starship prompt if available
 #if command -v starship &> /dev/null; then

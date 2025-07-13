@@ -2,8 +2,8 @@
 syntax on
 
 " Enable relative line numbering
-set rnu
-"set nu
+"set rnu
+set nu
 " Disable  mouse
 "set mouse=v
 set mouse=a
