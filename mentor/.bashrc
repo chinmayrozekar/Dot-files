@@ -4,7 +4,7 @@ export CVSROOT=':pserver:wvcalcvs:/wv/pevtools/cvsroot'
 export SGE_ROOT='/wv/calgrid/sge'
 export SKIP_OS_CHECKS=yes
 #export CAL_OPTIONS="-turbo -hyper"
-
+export DISPLAY='orw-chiroz51-r8.wv.mentorg.com:1'
 export TEST_SUITE_TOP='/wv/lvs_aut/master_perc_tot/calibre'
 
 alias clrcalenv='unset ${!CALIBRE_*}; unset CAL_OPTIONS' # remove all CALIBRE envs
@@ -60,7 +60,7 @@ esac
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='\u@\h:\w\$ '
+    PS1='\u@\h:\w\$'
 fi
 
 # if this is an xterm set the title to user@host:dir
@@ -117,33 +117,35 @@ alias clearclip='echo -n "" | xclip -selection clipboard'
 # Calibre specific Aliases:
 
 source /user/pete/bin/pe_aliases.sh   
-source /home/chiroz51/.calibre_aliases_bash
+# source /home/chiroz51/.calibre_aliases_bash
 source /wv/chiroz51/toolbox/setmgc.sh
 source $TEST_SUITE_TOP/perc/utils/lib/include.lib
 
 tot
 
-alias nedit='/user/hanguyen/bin/nedit -rows 60 -columns 90'
+#alias nedit='/user/hanguyen/bin/nedit -rows 60 -columns 90'
 # Chinmay custom Aliases:
-
+alias pl="code $TEST_SUITE_TOP/perc/utils/lib/perc.lib"
 alias tclsh="rlwrap tclsh"
 alias n='nautilus . &> /dev/null & disown'
 alias nobackup='cd /wv/chiroz51_nobackup'
 alias tickets='cd /wv/chiroz51/tickets'
-alias mu='nvim /wv/chiroz51/tickets/Moustafa_updates'
+alias mu='vim /wv/chiroz51/tickets/Moustafa_updates'
 alias whatos='lsb_release -idr' # INFO: Lists OS distributor ID, description, and release
 alias whichmgc='echo $MGC_HOME'
 alias la='ls'
 alias lsa='ls -lrtha'
-alias chiroz='cd /wv/chiroz51'
+alias chiroz51='cd /wv/chiroz51'
 alias toolbox='cd /wv/chiroz51/toolbox'
 alias myoshimo='cd /wv/myoshimo'
 alias hanguyen='cd /wv/hanguyen'
 alias ibrbin2r='cd /wv/ibrbin2r '
 alias master_tot='cd /wv/perc_aut2/master_perc_tot'
-alias master_large='pd /wv/perc_aut2/master_perc_tot/calibre/perc/large'
-alias master_topo='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo'
-alias master_topo_feature='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo/topo/feature'
+alias ml='pd /wv/perc_aut2/master_perc_tot/calibre/perc/large'
+alias mlt='pd /wv/perc_aut2/master_perc_tot/calibre/perc/large/topo'
+alias mt='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo'
+alias mtf='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo/topo/feature'
+alias mtb='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo/topo/bugs'
 alias master_3DIC='pd /wv/perc_aut2/master_perc_tot/calibre/perc/topo/3DIC'
 alias master_LDL='pd /wv/perc_aut2/master_perc_tot/calibre/perc/LDL'
 alias master_p2p='pd /wv/perc_aut2/master_perc_tot/calibre/perc/LDL/p2p'
@@ -152,17 +154,28 @@ alias restart_vnc='
 /usr/bin/vncserver -kill :1 && \
 /usr/bin/vncserver :1 -geometry 1920x1080 -depth 24 -alwaysshared -AcceptCutText=1 -SendCutText=1 -listen tcp
 '
-alias perc_lib="nvim /wv/lvs_aut/master_perc_tot/calibre/perc/utils/lib/perc.lib"
+alias perc_lib="code /wv/lvs_aut/master_perc_tot/calibre/perc/utils/lib/perc.lib"
 alias cal_version="$MGC_HOME/bin/calibre -version"
 alias cheatsheets="cd /wv/chiroz51/misc/cheatsheets"
-alias cheatsheet_masa="nvim /home/myoshimo/myCheatSheet.txt"
-alias mycheatsheet="nvim /wv/chiroz51/misc/cheatsheets/cheatSheetChinmay.txt"
+alias cheatsheet_masa="code /home/myoshimo/myCheatSheet.txt"
+alias mc="code /wv/chiroz51/misc/cheatsheets/cheatSheetChinmay.md"
 alias wl="vim /wv/chiroz51/misc/cheatsheets/vimwiki/workLog.md"
+alias dl="code /wv/chiroz51/misc/cheatsheets/vimwiki/dailyLog.md"
 alias misc="cd /wv/chiroz51/misc"
-alias del_CVS="find . -type d -name "CVS" -exec rm -rf {} \;"
-alias cim="nvim"
+alias cim="vim"
 alias rp='realpath'
+alias qt="qstat -u chiroz51 | grep -v gridflex"
+# find and remove all cvs directories from my testcase
+alias f_cvs="find . -type d -name 'CVS'"
+alias rm_cvs="find . -type d -name 'CVS' -exec rm -r {} +"
+# Runregcm:
+alias runregcm="/wv/lvs_aut/tools/bin/runregcm.py"
 
+# QA meeting minutes:
+alias qaminutes="code /home/perctest/public_html/QA_meeting_minutes/QA_meeting_minutes_latest.txt"
+
+# work log path
+export WL_PATH=/wv/chiroz51/misc/cheatsheets/vimwiki/workLog.md
 
 # switch branches:
 swb() {
@@ -183,11 +196,11 @@ swb() {
 
 
 # rc files
-alias bashrc="vim ~/.bashrc"
+alias bashrc="code ~/.bashrc"
 alias sbashrc="source ~/.bashrc"
-alias vimrc="vim ~/.vimrc"
+alias vimrc="code ~/.vimrc"
 alias svimrc="source ~/.vimrc"
-alias tmuxconf="gvim ~/.tmux.conf"
+alias tmuxconf="vim ~/.tmux.conf"
 alias stmuxconf="source ~/.tmux.conf"
 
 # Joplin
@@ -196,21 +209,23 @@ alias joplin="/wv/chiroz51/misc/Joplin-3.1.24.AppImage"
 # Taskwarrior
 export PATH=$HOME/.local/bin:$PATH
 alias tasks="task"
-alias taskrc="nvim ~/.taskrc"
+alias taskrc="vim ~/.taskrc"
 alias staskrc="source ~/.taskrc"
 alias t="task list"
 #alias ta="task add $1"
 alias ta="task active"
 alias tan="task $1 annotate $2"
+alias tr="task myreport"
+alias tl="task long"
 alias report="task burndown.daily"
 alias tui="taskwarrior-tui"
 
 # JIRA
 
-alias mywork='jira list --template list --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done) ORDER BY fixVersion DESC"'
+#alias mywork='jira list --template list --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done) ORDER BY fixVersion DESC"'
 
-alias mywork-simple='jira list --template simple --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done)"'
-
+#alias mywork-simple='jira list --template simple --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done)"'
+alias jira="jiraquery -jql '(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done) ORDER BY cf[11733] ASC'"
 
 function taskTag(){
         task $1 modify +$2
@@ -264,21 +279,6 @@ alias r2="./setup_tst;./dofile;./compare"
 
 
 
-# find and remove all cvs directories from my testcase
-
-alias f_cvs="find . -type d -name 'CVS'"
-alias rm_cvs="find . -type d -name "CVS" -exec rm -r {} +"
-
-#------------- TEMPORARY DEL LATER---------------#
-
-my_commands() {
-    cp curr_ew baseline/
-    cp qaout.perc.rep baseline/
-    cp qaout.cell_list baseline/
-    cp qaout.log baseline/
-}
-
-
 #------------- CVS related commands---------------#
 
 cm() {
@@ -292,11 +292,11 @@ cma() {
 }
 #  ---------   2025 ------------------------------#
 cal_1() {
-    cvs up -r cal2025_1
+    cvs up -r cal2026_1
 }
 
 cal_2() {
-    cvs up -r cal2025_2
+    cvs up -r cal2026_2
 }
 
 cal_3() {
@@ -307,7 +307,7 @@ cal_4() {
     cvs up -r cal2025_4
 }
 cvsa() {
-    cvs up -A
+    cvs up -A    # this is only for TOT 
 }
 
 
@@ -356,7 +356,6 @@ alias logseq=/home/chiroz51/appimages/Logseq-linux-x64-0.9.4.AppImage
 #fi
 
 
-# alias vim="nvim"
 
 if command -v btop &> /dev/null; then
     alias top='btop'
@@ -372,12 +371,23 @@ if command -v fzf &> /dev/null; then
 fi
 
 # Set up zoxide (smart cd command) if available
+#if command -v zoxide &>/dev/null; then
+#    eval "$(zoxide init bash)"
+#   alias cd='z'               # jump-to-dir magic 
+#else
+#   unalias cd 2>/dev/null || true   # ensure we’re back to plain `cd`
+#fi
+
 if command -v zoxide &>/dev/null; then
     eval "$(zoxide init bash)"
-    alias cd='z'               # jump-to-dir magic 🪄
+    alias cd='z'
 else
-    unalias cd 2>/dev/null || true   # ensure we’re back to plain `cd`
+    # First, unset any existing cd alias
+    unalias cd 2>/dev/null || true
+    # Explicitly restore cd as a builtin
+    cd() { builtin cd "$@"; }
 fi
+
 
 
 # Set up starship prompt if available
@@ -405,8 +415,9 @@ check_test() {
         echo "Usage: check_test <test_name>"
         return 1
     fi
-    $TOOLBOX/checkin_perc_testcase.py -t "$1" 
-#    $TOOLBOX/checkin_script/dist/perc_checkin_testcase -t "$1"
+    $TEST_SUITE_TOP/perc/utils/bin/checkin_script/dist/perc_checkin_testcase -t "$1"
+    # checkin_perc_testcase.py -t "$1"
+
 
 }
 
@@ -416,8 +427,9 @@ checkin_test() {
         echo "Example: checkin_test dr1356268_mtk_issue topo/voltage/feature 'tot,2019_4' 'your comment'"
         return 1
     fi
-    $TOOLBOX/checkin_perc_testcase.py -t "$1" -s -r "$2" -b "$3" -cm "$4"
-#    $TOOLBOX/checkin_script/dist/perc_checkin_testcase -t "$1" -s -r "$2" -b "$3" -cm "$4"
+#    checkin_perc_testcase.py -t "$1" -s -r "$2" -b "$3" -cm "$4" -norun
+   $TEST_SUITE_TOP/perc/utils/bin/checkin_script/dist/perc_checkin_testcase -t "$1" -s -r "$2" -b "$3" -cm "$4" -norun
+
 }
 
 # Test Suite Functions
@@ -426,7 +438,8 @@ check_suite() {
         echo "Usage: check_suite <suite_name>"
         return 1
     fi
-    $TOOLBOX/checkin_perc_testcase.py -p "$1"
+    # checkin_perc_testcase.py -p "$1"
+    $TEST_SUITE_TOP/perc/utils/bin/checkin_script/dist/perc_checkin_testcase -p "$1"
 }
 
 checkin_suite() {
@@ -435,7 +448,9 @@ checkin_suite() {
         echo "Example: checkin_suite dr1356268_mtk_issue topo/voltage/feature tot 'your comment'"
         return 1
     fi
-    $TOOLBOX/checkin_perc_testcase.py -p "$1" -s -r "$2" -b "$3" -cm "$4"
+    # checkin_perc_testcase.py -p "$1" -s -r "$2" -b "$3" -cm "$4" -norun
+    $TEST_SUITE_TOP/perc/utils/bin/checkin_script/dist/perc_checkin_testcase -p "$1" -s -r "$2" -b "$3" -cm "$4" -norun
+
 }
 
 

@@ -100,7 +100,8 @@ Plug 'preservim/nerdtree'
 " Syntax Highlighting
 Plug 'sheerun/vim-polyglot'
 
-
+" Vim code dark
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
 "----------------------------------------------------------------
@@ -244,10 +245,7 @@ augroup custom_highlights
 augroup END
 
 
-" JIRA
-nnoremap <leader>t :r !jira list --template simple --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done)"<CR>
 
-nnoremap <leader>tt :r !jira list --template list --query "(assignee = chiroz51 OR \"QA Owner\" = chiroz51) AND project in (PERC, PERC_AMY) AND status not in (closed, released, done) ORDER BY fixVersion DESC"<CR>
 
 
 
@@ -308,6 +306,14 @@ vnoremap <leader>y :w !xclip -sel clip<CR><CR>
 " Paste from clipboard
 nnoremap <leader>p :r !xclip -sel clip -o<CR>
 
+" Remap shit Insert to paste from system clipboard in GVIM
+" Map Shift+Insert in insert mode to paste system clipboard
+imap <S-Insert> <C-r>+
 
 
+" Map visual block to different key combo
+nnoremap <Leader>v <C-v>
+vnoremap <Leader>v <C-v>
 
+" Map leader+t to open terminal below
+nnoremap <leader>t :bel term<CR>
